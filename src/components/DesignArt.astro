@@ -1,0 +1,86 @@
+---
+/**
+ * DesignArt - the generated square "artwork" for a design
+ * No external images. Used small in DesignCard and large
+ * on the design-detail page.
+ * Accepts a <slot/> for overlays (e.g. the product chip).
+ */
+import type { Motif } from '../data/designs';
+interface Props {
+	c1: string;
+	c2: string;
+	motif?: Motif;
+    class?: string;
+}
+
+
+const {c1, c2, motif = "orbit", class: className = ""} = Astro.props;
+const ink = 'rgba(23,20,14,0.85)';
+const paper = 'rgba(255,255,255,0.9)'
+---
+
+<div class={`relative aspect-square overflow-hidden ${className}`} style={`background: linear-gradient(135deg, ${c1}, ${c2});`}>
+	<svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+		{motif === 'orbit' && (
+			<g fill="none" stroke={paper} stroke-width="3">
+				<circle cx="50" cy="50" r="34" />
+				<circle cx="50" cy="50" r="22" />
+				<circle cx="50" cy="50" r="10" fill={ink} stroke="none" />
+				<circle cx="84" cy="50" r="5" fill={paper} stroke="none" />
+			</g>
+		)}
+		{motif === 'rays' && (
+			<g stroke={paper} stroke-width="4" stroke-linecap="round">
+				{Array.from({ length: 12 }).map((_, i) => {
+					const a = (i / 12) * Math.PI * 2;
+					return <line x1={50 + Math.cos(a) * 14} y1={50 + Math.sin(a) * 14} x2={50 + Math.cos(a) * 46} y2={50 + Math.sin(a) * 46} />;
+				})}
+				<circle cx="50" cy="50" r="11" fill={ink} stroke="none" />
+			</g>
+		)}
+		{motif === 'blob' && (
+			<g>
+				<circle cx="38" cy="42" r="26" fill={paper} />
+				<circle cx="66" cy="60" r="20" fill={ink} />
+				<circle cx="40" cy="44" r="6" fill={ink} />
+			</g>
+		)}
+		{motif === 'wave' && (
+			<g fill="none" stroke={paper} stroke-width="5" stroke-linecap="round">
+				<path d="M0 38 Q 25 18 50 38 T 100 38" />
+				<path d="M0 58 Q 25 38 50 58 T 100 58" stroke={ink} />
+				<path d="M0 78 Q 25 58 50 78 T 100 78" />
+			</g>
+		)}
+		{motif === 'arch' && (
+			<g fill="none" stroke-width="7" stroke-linecap="round">
+				<path d="M18 78 A 32 32 0 0 1 82 78" stroke={paper} />
+				<path d="M30 78 A 20 20 0 0 1 70 78" stroke={ink} />
+				<circle cx="50" cy="78" r="5" fill={ink} />
+			</g>
+		)}
+		{motif === 'bolt' && (
+			<g>
+				<path d="M55 12 L30 56 H48 L42 88 L72 40 H52 Z" fill={paper} stroke={ink} stroke-width="2.5" stroke-linejoin="round" />
+			</g>
+		)}
+		{motif === 'eye' && (
+			<g>
+				<ellipse cx="50" cy="50" rx="40" ry="26" fill="none" stroke={paper} stroke-width="4" />
+				<circle cx="50" cy="50" r="15" fill={ink} />
+				<circle cx="56" cy="44" r="4.5" fill={paper} />
+			</g>
+		)}
+		{motif === 'checker' && (
+			<g fill={paper}>
+				<rect x="14" y="14" width="22" height="22" />
+				<rect x="58" y="14" width="22" height="22" fill={ink} />
+				<rect x="36" y="36" width="22" height="22" fill={ink} />
+				<rect x="14" y="58" width="22" height="22" fill={ink} />
+				<rect x="58" y="58" width="22" height="22" />
+			</g>
+		)}
+	</svg>
+	<div class="halftone absolute inset-0 text-ink opacity-15"></div>
+	<slot />
+</div>

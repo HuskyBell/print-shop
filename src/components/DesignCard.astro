@@ -1,0 +1,28 @@
+---
+/*
+* DesignCard — a clickable marketplace listing tile.
+* Rotation rides the `--rot` CSS variable to the hover lift composes with the tilt.
+* Artwork comes from <DesignArt>
+*/
+import type { Motif } from '../data/designs';
+import { DesignArt } from './DesignArt.astro';
+interface Props {
+    slug: string;
+	title: string;
+	maker: string;
+	credits: number;
+	product: string;
+	c1: string;
+	c2: string;
+	motif?: Motif;
+	rotate?: number;
+	featured?: boolean;
+}
+
+const { slug, title, maker, credits, product, c1, c2, motif = "orbit", rotate = 0, featured = false } = Astro.props;
+
+const rot = featured ? 0 : rotate
+const spamClass = featured ? 'sm:col-span-2 sm:row-span-2 sm:self-start' : ''
+---
+
+{slug}
