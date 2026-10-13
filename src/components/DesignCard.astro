@@ -6,8 +6,8 @@
 */
 import type { Motif } from '../data/designs';
 import { DesignArt } from './DesignArt.astro';
+
 interface Props {
-    slug: string;
 	title: string;
 	maker: string;
 	credits: number;
@@ -19,10 +19,15 @@ interface Props {
 	featured?: boolean;
 }
 
-const { slug, title, maker, credits, product, c1, c2, motif = "orbit", rotate = 0, featured = false } = Astro.props;
-
-const rot = featured ? 0 : rotate
-const spamClass = featured ? 'sm:col-span-2 sm:row-span-2 sm:self-start' : ''
+const { title, maker, credits, product, c1, c2, motif = "orbit", rotate = 0, featured = false } = Astro.props;
+const rot = featured ? 0 : rotate;
+const spanClass = featured ? 'sm:col-span-2 sm:row-span-2 sm:self-start' : '';
 ---
 
-{slug}
+<a>
+ <DesignArt c1={c1} c2={c2} motif={motif}>
+	<span>
+		{product}
+	</span>
+ </DesignArt>
+</a>
