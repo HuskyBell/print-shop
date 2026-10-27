@@ -1,6 +1,6 @@
 ---
 import PublicLayout from '../layouts/PublicLayout.astro';
-import { DesignCard } from '../components/DesignCard.astro';
+import DesignCard  from '../components/DesignCard.astro';
 import { designs } from '../data/designs';
 
 
@@ -141,7 +141,7 @@ const burst = Array.from({ length: 24 }, (_, i) => {
 							<span class="h-3 w-3 rounded-full bg-lime"></span>
 						</span>
 					</div>
-					<div class="grid grid-cols-2 gap-4">{heroDesigns}</div>
+					<div class="grid grid-cols-2 gap-4">{heroDesigns.map(uno => <DesignCard {...uno}/>)}</div>
 				</div>
 			</div>
 		</div>

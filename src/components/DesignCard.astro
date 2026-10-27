@@ -1,13 +1,14 @@
 ---
-/*
-* DesignCard — a clickable marketplace listing tile.
-* Rotation rides the `--rot` CSS variable to the hover lift composes with the tilt.
-* Artwork comes from <DesignArt>
-*/
+/**
+ * DesignCard — a clickable marketplace listing tile.
+ * Rotation rides the `--rot` CSS var (see `.design-tilt`) so the hover
+ * lift composes with the tilt. Artwork comes from <DesignArt>.
+ */
+import DesignArt from './DesignArt.astro';
 import type { Motif } from '../data/designs';
-import { DesignArt } from './DesignArt.astro';
 
 interface Props {
+	slug: string;
 	title: string;
 	maker: string;
 	credits: number;
@@ -19,15 +20,29 @@ interface Props {
 	featured?: boolean;
 }
 
-const { title, maker, credits, product, c1, c2, motif = "orbit", rotate = 0, featured = false } = Astro.props;
+const { slug, title, maker, credits, product, c1, c2, motif = 'orbit', rotate = 0, featured = false } = Astro.props;
 const rot = featured ? 0 : rotate;
 const spanClass = featured ? 'sm:col-span-2 sm:row-span-2 sm:self-start' : '';
 ---
 
-<a>
- <DesignArt c1={c1} c2={c2} motif={motif}>
-	<span>
-		{product}
-	</span>
- </DesignArt>
+<a
+	href={`/design/${slug}`}
+	class={`sticker design-tilt group block overflow-hidden rounded-2xl ${spanClass}`}
+	style={`--rot: ${rot}deg;`}
+>
+	<DesignArt c1={c1} c2={c2} motif={motif}>
+		<span class="absolute left-3 top-3 rounded-full border-2 border-ink bg-paper px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide">
+			{product}
+		</span>
+	</DesignArt>
+
+	<div class="flex items-center justify-between gap-3 bg-white px-4 py-3">
+		<div class="min-w-0">
+			<h3 class={`truncate font-display font-bold leading-tight ${featured ? 'text-xl' : 'text-base'}`}>{title}</h3>
+			<p class="truncate text-xs text-ink/55">by @{maker}</p>
+		</div>
+		<span class="shrink-0 rounded-full bg-ink px-2.5 py-1 text-xs font-bold text-yellow">
+			{credits} cr
+		</span>
+	</div>
 </a>
