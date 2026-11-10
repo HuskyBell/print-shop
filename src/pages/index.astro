@@ -2,10 +2,11 @@
 import PublicLayout from '../layouts/PublicLayout.astro';
 import DesignCard  from '../components/DesignCard.astro';
 import { designs } from '../data/designs';
+import type { $brand, $input } from 'astro:schema';
 
 
 const heroDesigns = designs.slice(0, 4);
-const featuredDesigns = designs.slice(0, 9);
+const featuredDesigns = designs.slice(0, 8);
 
 const stats = ['12,480 designs', '3,800 makers', '$48,200 paid to designers', '9 products', '61k prints shipped', '4.9★ avg rating'];
 
@@ -153,7 +154,19 @@ const burst = Array.from({ length: 24 }, (_, i) => {
 	</section>
 
 	<!-- ── Featured designs ───────────────────────────────── -->
-	<section></section>
+<section class="mx-auto max-w-6xl px-5 py-20 lg:py-28">
+		<div class="reveal flex flex-wrap items-end justify-between gap-4">
+			<div>
+				<h2 class="misregister font-display text-4xl font-extrabold tracking-tight sm:text-5xl">Fresh from the gallery</h2>
+				<p class="mt-3 text-ink/65">Community-made, AI-generated, ready to print.</p>
+			</div>
+			<a href="/browse" class="font-display font-bold text-coral hover:underline">See all designs →</a>
+		</div>
+
+		<div class="mt-7 flex flex-wrap gap-2.5">{filters.map((f, i)=> <button class={`sticker rounded-full px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none ${i === 0 ? "bg-ink text-paper" : "bg-white"}`} >{f}</button>)}</div>
+
+		<div class="mt-9 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">{featuredDesigns.map((d, i) => <DesignCard {...d}/>)}</div>
+	</section>
 
 	<!-- ── Product types ──────────────────────────────────── -->
 	<section></section>
